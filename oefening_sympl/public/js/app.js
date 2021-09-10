@@ -88,18 +88,15 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-function dropDown() {
+var dropDown = function dropDown(props) {
   var _a = (0, react_1.useState)([]),
       projects = _a[0],
       setProjects = _a[1];
 
   var _b = (0, react_1.useState)([]),
       error = _b[0],
-      setError = _b[1];
+      setError = _b[1]; // Call the api for the different project
 
-  var _c = (0, react_1.useState)(),
-      selectedOption = _c[0],
-      setSelectedOption = _c[1];
 
   (0, react_1.useEffect)(function () {
     fetch("http://127.0.0.1:8000/getProjects").then(function (res) {
@@ -111,10 +108,12 @@ function dropDown() {
     });
   }, []);
 
-  var selectChange = function selectChange(event) {
-    var value = event.target.value;
-    setSelectedOption(value);
-  };
+  var selectChange = function selectChange(e) {
+    var value = e.target.value; // Lift the state up on change
+
+    props.onDropInputUpdated(value);
+  }; // Render the dropdown
+
 
   return react_1["default"].createElement("select", {
     onChange: selectChange,
@@ -130,10 +129,9 @@ function dropDown() {
       key: project.id
     }, project.project_name);
   }));
-}
+};
 
 exports["default"] = dropDown;
-;
 
 /***/ }),
 
@@ -217,62 +215,35 @@ exports["default"] = Header;
 
 
 
-var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  Object.defineProperty(o, k2, {
-    enumerable: true,
-    get: function get() {
-      return m[k];
-    }
-  });
-} : function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  o[k2] = m[k];
-});
-
-var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
-  Object.defineProperty(o, "default", {
-    enumerable: true,
-    value: v
-  });
-} : function (o, v) {
-  o["default"] = v;
-});
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-  }
-
-  __setModuleDefault(result, mod);
-
-  return result;
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
 };
 
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-function inputField() {
-  var _a = (0, react_1.useState)(),
-      userInput = _a[0],
-      setUserInput = _a[1];
+var inputField = function inputField(props) {
+  var inputChange = function inputChange(e) {
+    // Lift the state up on change
+    props.onInputUpdated(e.target.value);
+  };
 
   return react_1["default"].createElement("input", {
+    onChange: inputChange,
     type: "text",
     name: "email",
     id: "email",
     className: "py-2 px-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
     placeholder: "Enter an email"
   });
-}
+};
 
 exports["default"] = inputField;
-;
 
 /***/ }),
 
@@ -328,7 +299,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 var inputField_1 = __importDefault(__webpack_require__(/*! ./inputField */ "./resources/js/components/inputField.tsx"));
 
@@ -337,13 +308,32 @@ var dropDown_1 = __importDefault(__webpack_require__(/*! ./dropDown */ "./resour
 var linkButton_1 = __importDefault(__webpack_require__(/*! ./linkButton */ "./resources/js/components/linkButton.tsx"));
 
 function inputForm() {
-  return React.createElement("form", {
+  var _a = (0, react_1.useState)(""),
+      userInput = _a[0],
+      setUserInput = _a[1];
+
+  var _b = (0, react_1.useState)(""),
+      dropdownInput = _b[0],
+      setDropdownInput = _b[1]; //let [formSubmitted, setformSubmitted] = useState(false);
+
+
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    console.log(userInput + dropdownInput);
+  };
+
+  return react_1["default"].createElement("form", {
     action: "#",
-    className: "mt-6 flex"
-  }, React.createElement("label", {
+    className: "mt-6 flex",
+    onSubmit: handleSubmit
+  }, react_1["default"].createElement("label", {
     htmlFor: "email",
     className: "sr-only"
-  }, "Email address"), React.createElement(inputField_1["default"], null), React.createElement(dropDown_1["default"], null), React.createElement(linkButton_1["default"], null));
+  }, "Email address"), react_1["default"].createElement(inputField_1["default"], {
+    onInputUpdated: setUserInput
+  }), react_1["default"].createElement(dropDown_1["default"], {
+    onDropInputUpdated: setDropdownInput
+  }), react_1["default"].createElement(linkButton_1["default"], null));
 }
 
 exports["default"] = inputForm;
@@ -399,15 +389,15 @@ Object.defineProperty(exports, "__esModule", ({
 
 var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-function linkButton() {
+var linkButton = function linkButton() {
   return React.createElement("button", {
     type: "submit",
+    id: "link-btn",
     className: "ml-4 flex-shrink-0 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
   }, "Link");
-}
+};
 
 exports["default"] = linkButton;
-;
 
 /***/ }),
 
