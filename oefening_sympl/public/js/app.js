@@ -24,13 +24,82 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 
 var header_1 = __importDefault(__webpack_require__(/*! ./header */ "./resources/js/components/header.tsx"));
 
+var inputForm_1 = __importDefault(__webpack_require__(/*! ./inputForm */ "./resources/js/components/inputForm.tsx"));
+
+var memberList_1 = __importDefault(__webpack_require__(/*! ./memberList */ "./resources/js/components/memberList.tsx"));
+
 var App = function App() {
   return react_1["default"].createElement("div", {
     className: "max-w-lg mx-auto"
-  }, react_1["default"].createElement("div", null, react_1["default"].createElement(header_1["default"], null)));
+  }, react_1["default"].createElement("div", null, react_1["default"].createElement(header_1["default"], null), react_1["default"].createElement(inputForm_1["default"], null)), react_1["default"].createElement("div", {
+    className: "mt-10"
+  }, react_1["default"].createElement(memberList_1["default"], null)));
 };
 
 exports["default"] = App;
+
+/***/ }),
+
+/***/ "./resources/js/components/dropDown.tsx":
+/*!**********************************************!*\
+  !*** ./resources/js/components/dropDown.tsx ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+function dropDown() {
+  return React.createElement("select", {
+    id: "location",
+    name: "location",
+    className: "ml-1 shadow-sm block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+  }, React.createElement("option", null, "Project 1"), React.createElement("option", {
+    selected: true
+  }, "Another project"), React.createElement("option", null, "Third project"));
+}
+
+exports["default"] = dropDown;
+;
 
 /***/ }),
 
@@ -38,9 +107,328 @@ exports["default"] = App;
 /*!********************************************!*\
   !*** ./resources/js/components/header.tsx ***!
   \********************************************/
-/***/ (() => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+function Header() {
+  return React.createElement("div", {
+    className: "text-center"
+  }, React.createElement("svg", {
+    className: "mx-auto h-12 w-12 text-gray-400",
+    fill: "none",
+    stroke: "currentColor",
+    viewBox: "0 0 48 48",
+    "aria-hidden": "true"
+  }, React.createElement("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M34 40h10v-4a6 6 0 00-10.712-3.714M34 40H14m20 0v-4a9.971 9.971 0 00-.712-3.714M14 40H4v-4a6 6 0 0110.713-3.714M14 40v-4c0-1.313.253-2.566.713-3.714m0 0A10.003 10.003 0 0124 26c4.21 0 7.813 2.602 9.288 6.286M30 14a6 6 0 11-12 0 6 6 0 0112 0zm12 6a4 4 0 11-8 0 4 4 0 018 0zm-28 0a4 4 0 11-8 0 4 4 0 018 0z"
+  })), React.createElement("h2", {
+    className: "mt-2 text-lg font-medium text-gray-900"
+  }, "Add projects to team members"));
+}
+
+exports["default"] = Header;
+;
+
+/***/ }),
+
+/***/ "./resources/js/components/inputField.tsx":
+/*!************************************************!*\
+  !*** ./resources/js/components/inputField.tsx ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+function inputField() {
+  return React.createElement("input", {
+    type: "text",
+    name: "email",
+    id: "email",
+    className: "py-2 px-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+    placeholder: "Enter an email"
+  });
+}
+
+exports["default"] = inputField;
+;
+
+/***/ }),
+
+/***/ "./resources/js/components/inputForm.tsx":
+/*!***********************************************!*\
+  !*** ./resources/js/components/inputForm.tsx ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var inputField_1 = __importDefault(__webpack_require__(/*! ./inputField */ "./resources/js/components/inputField.tsx"));
+
+var dropDown_1 = __importDefault(__webpack_require__(/*! ./dropDown */ "./resources/js/components/dropDown.tsx"));
+
+var linkButton_1 = __importDefault(__webpack_require__(/*! ./linkButton */ "./resources/js/components/linkButton.tsx"));
+
+function inputForm() {
+  return React.createElement("form", {
+    action: "#",
+    className: "mt-6 flex"
+  }, React.createElement("label", {
+    htmlFor: "email",
+    className: "sr-only"
+  }, "Email address"), React.createElement(inputField_1["default"], null), React.createElement(dropDown_1["default"], null), React.createElement(linkButton_1["default"], null));
+}
+
+exports["default"] = inputForm;
+;
+
+/***/ }),
+
+/***/ "./resources/js/components/linkButton.tsx":
+/*!************************************************!*\
+  !*** ./resources/js/components/linkButton.tsx ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+function linkButton() {
+  return React.createElement("button", {
+    type: "submit",
+    className: "ml-4 flex-shrink-0 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+  }, "Link");
+}
+
+exports["default"] = linkButton;
+;
+
+/***/ }),
+
+/***/ "./resources/js/components/memberList.tsx":
+/*!************************************************!*\
+  !*** ./resources/js/components/memberList.tsx ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+function memberList() {
+  return React.createElement("div", null, React.createElement("h3", {
+    className: "text-xs font-semibold text-gray-500 uppercase tracking-wide"
+  }, "Team members + projects"));
+}
+
+exports["default"] = memberList;
+;
 
 /***/ }),
 
