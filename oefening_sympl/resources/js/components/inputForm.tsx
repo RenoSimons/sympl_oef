@@ -5,8 +5,11 @@ import InputField from "./inputField";
 import DropDown from "./dropDown";
 import LinkButton from "./linkButton";
 
+interface Props {
+    rerenderParentCallback: any;
+}
 
-export default function inputForm() {
+const inputForm: React.FC<Props> = (props) => {
 
     let [userInput, setUserInput] = useState("");
     let [dropdownInput, setDropdownInput] = useState("");
@@ -17,7 +20,9 @@ export default function inputForm() {
 
         // Make call to the api
         axios.post('http://127.0.0.1:8000/linkProject', {userInput,  dropdownInput})
-        .then(response => console.log(response));
+        .then(response => {
+            props.rerenderParentCallback();
+        });
     }
 
     return (
@@ -33,3 +38,5 @@ export default function inputForm() {
         </form>
     );
 };
+
+export default inputForm;

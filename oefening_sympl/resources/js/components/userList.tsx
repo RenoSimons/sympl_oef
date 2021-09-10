@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import User from "./user";
 
-export default function userList() {
+interface Props {
+    rerenderComponent: boolean;
+}
+
+const userList: React.FC<Props> = (props) => {
     const [users, setUsers] = useState<any[]>([])
     const [error, setError] = useState([]);
 
@@ -17,7 +21,7 @@ export default function userList() {
             setError(error);
             }
         )
-    }, [])
+    }, [props.rerenderComponent])
 
     return (
         <div>
@@ -29,6 +33,10 @@ export default function userList() {
                     <User key={user.id} user={user}/>
                 ))}
             </ul>
+
+            <p>{props.rerenderComponent}</p>
         </div>
     );
 };
+
+export default userList;

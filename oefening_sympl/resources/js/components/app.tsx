@@ -4,15 +4,28 @@ import Header from "./header";
 import InputForm from "./inputForm";
 import UserList from "./userList";
 
+// Todo:
+// Autocomplete
+// Dynamic project tags
+// Form validation
+// Error handling
+
 const App = () => {
+
+    let [rerenderComponent, setRerenderComponent] = useState(false);
+
+    const rerenderParentCallback = () => {
+        setRerenderComponent(true);
+    }
+    
     return (
         <div className="max-w-lg mx-auto">
             <div>
                 <Header />
-                <InputForm />
+                <InputForm rerenderParentCallback={rerenderParentCallback}/>
             </div>
             <div className="mt-10">
-                <UserList />
+                <UserList rerenderComponent={rerenderComponent}/>
             </div>
         </div>
         

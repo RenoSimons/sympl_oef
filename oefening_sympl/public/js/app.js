@@ -2063,6 +2063,40 @@ module.exports = {
 "use strict";
 
 
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -2073,20 +2107,37 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 var header_1 = __importDefault(__webpack_require__(/*! ./header */ "./resources/js/components/header.tsx"));
 
 var inputForm_1 = __importDefault(__webpack_require__(/*! ./inputForm */ "./resources/js/components/inputForm.tsx"));
 
-var userList_1 = __importDefault(__webpack_require__(/*! ./userList */ "./resources/js/components/userList.tsx"));
+var userList_1 = __importDefault(__webpack_require__(/*! ./userList */ "./resources/js/components/userList.tsx")); // Todo:
+// Autocomplete
+// Dynamic project tags
+// Form validation
+// Error handling
+
 
 var App = function App() {
+  var _a = (0, react_1.useState)(false),
+      rerenderComponent = _a[0],
+      setRerenderComponent = _a[1];
+
+  var rerenderParentCallback = function rerenderParentCallback() {
+    setRerenderComponent(true);
+  };
+
   return react_1["default"].createElement("div", {
     className: "max-w-lg mx-auto"
-  }, react_1["default"].createElement("div", null, react_1["default"].createElement(header_1["default"], null), react_1["default"].createElement(inputForm_1["default"], null)), react_1["default"].createElement("div", {
+  }, react_1["default"].createElement("div", null, react_1["default"].createElement(header_1["default"], null), react_1["default"].createElement(inputForm_1["default"], {
+    rerenderParentCallback: rerenderParentCallback
+  })), react_1["default"].createElement("div", {
     className: "mt-10"
-  }, react_1["default"].createElement(userList_1["default"], null)));
+  }, react_1["default"].createElement(userList_1["default"], {
+    rerenderComponent: rerenderComponent
+  })));
 };
 
 exports["default"] = App;
@@ -2366,7 +2417,7 @@ var dropDown_1 = __importDefault(__webpack_require__(/*! ./dropDown */ "./resour
 
 var linkButton_1 = __importDefault(__webpack_require__(/*! ./linkButton */ "./resources/js/components/linkButton.tsx"));
 
-function inputForm() {
+var inputForm = function inputForm(props) {
   var _a = (0, react_1.useState)(""),
       userInput = _a[0],
       setUserInput = _a[1];
@@ -2383,7 +2434,7 @@ function inputForm() {
       userInput: userInput,
       dropdownInput: dropdownInput
     }).then(function (response) {
-      return console.log(response);
+      props.rerenderParentCallback();
     });
   };
 
@@ -2399,10 +2450,9 @@ function inputForm() {
   }), react_1["default"].createElement(dropDown_1["default"], {
     onDropInputUpdated: setDropdownInput
   }), react_1["default"].createElement(linkButton_1["default"], null));
-}
+};
 
 exports["default"] = inputForm;
-;
 
 /***/ }),
 
@@ -2517,7 +2567,9 @@ Object.defineProperty(exports, "__esModule", ({
 var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 var user = function user(props) {
-  return React.createElement("li", null, React.createElement("div", {
+  return React.createElement("li", {
+    className: "py-4 flex items-center justify-between space-x-3"
+  }, React.createElement("div", {
     className: "min-w-0 flex-1 flex items-center space-x-3"
   }, React.createElement("div", {
     className: "flex-shrink-0"
@@ -2604,7 +2656,7 @@ var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/reac
 
 var user_1 = __importDefault(__webpack_require__(/*! ./user */ "./resources/js/components/user.tsx"));
 
-function userList() {
+var userList = function userList(props) {
   var _a = (0, react_1.useState)([]),
       users = _a[0],
       setUsers = _a[1];
@@ -2622,7 +2674,7 @@ function userList() {
     }, function (error) {
       setError(error);
     });
-  }, []);
+  }, [props.rerenderComponent]);
   return react_1["default"].createElement("div", null, react_1["default"].createElement("h3", {
     className: "text-xs font-semibold text-gray-500 uppercase tracking-wide"
   }, "Team members + projects"), react_1["default"].createElement("ul", {
@@ -2633,11 +2685,10 @@ function userList() {
       key: user.id,
       user: user
     });
-  })));
-}
+  })), react_1["default"].createElement("p", null, props.rerenderComponent));
+};
 
 exports["default"] = userList;
-;
 
 /***/ }),
 
