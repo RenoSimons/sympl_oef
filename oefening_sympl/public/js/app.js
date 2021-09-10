@@ -97,22 +97,36 @@ function dropDown() {
       error = _b[0],
       setError = _b[1];
 
+  var _c = (0, react_1.useState)(),
+      selectedOption = _c[0],
+      setSelectedOption = _c[1];
+
   (0, react_1.useEffect)(function () {
     fetch("http://127.0.0.1:8000/getProjects").then(function (res) {
       return res.json();
     }).then(function (result) {
       setProjects(result);
-      console.log(result);
     }, function (error) {
       setError(error);
     });
   }, []);
+
+  var selectChange = function selectChange(event) {
+    var value = event.target.value;
+    setSelectedOption(value);
+  };
+
   return react_1["default"].createElement("select", {
+    onChange: selectChange,
     id: "location",
     name: "location",
     className: "ml-1 shadow-sm block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-  }, projects.map(function (project) {
+  }, react_1["default"].createElement("option", {
+    selected: true,
+    disabled: true
+  }, "Choose project..."), projects.map(function (project) {
     return react_1["default"].createElement("option", {
+      value: project.id,
       key: project.id
     }, project.project_name);
   }));
@@ -241,10 +255,14 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 function inputField() {
-  return React.createElement("input", {
+  var _a = (0, react_1.useState)(),
+      userInput = _a[0],
+      setUserInput = _a[1];
+
+  return react_1["default"].createElement("input", {
     type: "text",
     name: "email",
     id: "email",

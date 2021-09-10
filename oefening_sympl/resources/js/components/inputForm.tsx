@@ -9,7 +9,6 @@ export default function inputForm() {
             <label htmlFor="email" className="sr-only">Email address</label>
             <InputField />
             
-
             <DropDown />
 
             <LinkButton />
