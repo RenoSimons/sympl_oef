@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Header from "./header";
 import InputForm from "./inputForm";
-import MemberList from "./memberList";
+import UserList from "./userList";
 
 const App = () => {
     return (
@@ -12,7 +12,7 @@ const App = () => {
                 <InputForm />
             </div>
             <div className="mt-10">
-                <MemberList />
+                <UserList />
             </div>
         </div>
         

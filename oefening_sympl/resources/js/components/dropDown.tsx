@@ -9,7 +9,7 @@ const dropDown: React.FC<Props> = (props) => {
   const [projects, setProjects] = useState<any[]>([])
   const [error, setError] = useState([]);
 
-  // Call the api for the different project
+  // Call the api for the different projects
   useEffect(() => {
     fetch("http://127.0.0.1:8000/getProjects")
       .then(res => res.json())
