@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 
+import Header from "./header";
 
 const App = () => {
     return (
-        <div>
-            <h1>App</h1>
+        <div className="max-w-lg mx-auto">
+            <div>
+                <Header />
+            </div>
         </div>
     );
 };

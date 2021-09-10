@@ -22,11 +22,25 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
+var header_1 = __importDefault(__webpack_require__(/*! ./header */ "./resources/js/components/header.tsx"));
+
 var App = function App() {
-  return react_1["default"].createElement("div", null, react_1["default"].createElement("h1", null, "App"));
+  return react_1["default"].createElement("div", {
+    className: "max-w-lg mx-auto"
+  }, react_1["default"].createElement("div", null, react_1["default"].createElement(header_1["default"], null)));
 };
 
 exports["default"] = App;
+
+/***/ }),
+
+/***/ "./resources/js/components/header.tsx":
+/*!********************************************!*\
+  !*** ./resources/js/components/header.tsx ***!
+  \********************************************/
+/***/ (() => {
+
+
 
 /***/ }),
 
