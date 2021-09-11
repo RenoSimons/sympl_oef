@@ -28,8 +28,6 @@ const inputForm: React.FC<Props> = (props) => {
     return (
         <form action="#" className="mt-6 flex" onSubmit={handleSubmit}>
 
-            <label htmlFor="email" className="sr-only">Email address</label>
-
             <InputField onInputUpdated={setUserInput} />
             
             <DropDown onDropInputUpdated={setDropdownInput}/>

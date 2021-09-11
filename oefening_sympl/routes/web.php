@@ -11,6 +11,9 @@ Route::get('/', function () {
 // Get the users with their projects
 Route::get('/getUsers', [UserController::class, 'getUsers'])->name('getUsers');
 
+// Get only the users emails
+Route::get('/getAllEmails', [UserController::class, 'getAllEmails'])->name('getAllEmails');
+
 // Link a member to a project
 Route::post('/linkProject', [ProjectController::class, 'linkProject'])->name('linkProject');
 

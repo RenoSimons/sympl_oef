@@ -2126,7 +2126,9 @@ var App = function App() {
       setRerenderComponent = _a[1];
 
   var rerenderParentCallback = function rerenderParentCallback() {
-    setRerenderComponent(true);
+    setRerenderComponent(function (rerenderComponent) {
+      return !rerenderComponent;
+    });
   };
 
   return react_1["default"].createElement("div", {
@@ -2141,6 +2143,106 @@ var App = function App() {
 };
 
 exports["default"] = App;
+
+/***/ }),
+
+/***/ "./resources/js/components/autoComplete.tsx":
+/*!**************************************************!*\
+  !*** ./resources/js/components/autoComplete.tsx ***!
+  \**************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var autoComplete = function autoComplete(props) {
+  var _a = (0, react_1.useState)([]),
+      emails = _a[0],
+      setEmails = _a[1];
+
+  var _b = (0, react_1.useState)(false),
+      isLoaded = _b[0],
+      setIsLoaded = _b[1];
+
+  var _c = (0, react_1.useState)([]),
+      suggestions = _c[0],
+      setSuggestions = _c[1];
+
+  var _d = (0, react_1.useState)(false),
+      suggestionAdded = _d[0],
+      setSuggestionAdded = _d[1];
+
+  if (props.input.length > 0 && !isLoaded) {
+    fetch("http://127.0.0.1:8000/getAllEmails").then(function (res) {
+      return res.json();
+    }).then(function (result) {
+      setEmails(result);
+      setIsLoaded(true);
+    });
+  }
+
+  (0, react_1.useEffect)(function () {
+    // Get everything lowercase and filter when input prop changes
+    setSuggestions(emails.filter(function (email) {
+      return email.toLowerCase().indexOf(props.input.toLowerCase()) > -1;
+    }));
+  }, [props.input]); // On click on suggestion pass the value to the parents
+
+  var fillInSuggestion = function fillInSuggestion(e) {
+    var element = e.currentTarget;
+    props.onSuggestionClicked(element.innerText);
+    setSuggestionAdded(true);
+  };
+
+  return react_1["default"].createElement("div", null, react_1["default"].createElement("ul", null, !suggestionAdded ? suggestions.map(function (suggestion, index) {
+    return react_1["default"].createElement("li", {
+      key: index,
+      onClick: fillInSuggestion
+    }, suggestion);
+  }) : ''));
+};
+
+exports["default"] = autoComplete;
 
 /***/ }),
 
@@ -2214,7 +2316,7 @@ var dropDown = function dropDown(props) {
   }, []);
 
   var selectChange = function selectChange(e) {
-    var value = e.target.value; // Lift the state up on change
+    var value = e.target.value; // Lift the state up to parent on change
 
     props.onDropInputUpdated(value);
   }; // Render the dropdown
@@ -2222,8 +2324,6 @@ var dropDown = function dropDown(props) {
 
   return react_1["default"].createElement("select", {
     onChange: selectChange,
-    id: "location",
-    name: "location",
     className: "ml-1 shadow-sm block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
   }, react_1["default"].createElement("option", {
     selected: true,
@@ -2322,6 +2422,40 @@ exports["default"] = Header;
 "use strict";
 
 
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -2332,22 +2466,42 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var autoComplete_1 = __importDefault(__webpack_require__(/*! ./autoComplete */ "./resources/js/components/autoComplete.tsx"));
 
 var inputField = function inputField(props) {
+  var _a = (0, react_1.useState)(''),
+      input = _a[0],
+      setInput = _a[1];
+
   var inputChange = function inputChange(e) {
     // Lift the state up on change
     props.onInputUpdated(e.target.value);
+    setInput(e.target.value);
   };
 
-  return react_1["default"].createElement("input", {
+  var suggestionClicked = function suggestionClicked(value) {
+    props.onInputUpdated(value);
+    setInput(value);
+  };
+
+  return react_1["default"].createElement("div", null, react_1["default"].createElement("div", null, react_1["default"].createElement("label", {
+    htmlFor: "email",
+    className: "sr-only"
+  }, "Email address"), react_1["default"].createElement("input", {
     onChange: inputChange,
+    value: input,
+    autoComplete: "off",
     type: "text",
     name: "email",
     id: "email",
     className: "py-2 px-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
     placeholder: "Enter an email"
-  });
+  })), react_1["default"].createElement("div", null, react_1["default"].createElement(autoComplete_1["default"], {
+    input: input,
+    onSuggestionClicked: suggestionClicked
+  })));
 };
 
 exports["default"] = inputField;
@@ -2442,10 +2596,7 @@ var inputForm = function inputForm(props) {
     action: "#",
     className: "mt-6 flex",
     onSubmit: handleSubmit
-  }, react_1["default"].createElement("label", {
-    htmlFor: "email",
-    className: "sr-only"
-  }, "Email address"), react_1["default"].createElement(inputField_1["default"], {
+  }, react_1["default"].createElement(inputField_1["default"], {
     onInputUpdated: setUserInput
   }), react_1["default"].createElement(dropDown_1["default"], {
     onDropInputUpdated: setDropdownInput

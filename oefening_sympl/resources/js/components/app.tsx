@@ -15,7 +15,7 @@ const App = () => {
     let [rerenderComponent, setRerenderComponent] = useState(false);
 
     const rerenderParentCallback = () => {
-        setRerenderComponent(true);
+        setRerenderComponent(rerenderComponent => !rerenderComponent);
     }
     
     return (
