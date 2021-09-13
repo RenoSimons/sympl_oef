@@ -4,12 +4,6 @@ import Header from "./header";
 import InputForm from "./inputForm";
 import UserList from "./userList";
 
-// Todo:
-// Autocomplete
-// Dynamic project tags
-// Form validation
-// Error handling
-
 const App = () => {
 
     let [rerenderComponent, setRerenderComponent] = useState(false);

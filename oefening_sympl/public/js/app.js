@@ -2113,12 +2113,7 @@ var header_1 = __importDefault(__webpack_require__(/*! ./header */ "./resources/
 
 var inputForm_1 = __importDefault(__webpack_require__(/*! ./inputForm */ "./resources/js/components/inputForm.tsx"));
 
-var userList_1 = __importDefault(__webpack_require__(/*! ./userList */ "./resources/js/components/userList.tsx")); // Todo:
-// Autocomplete
-// Dynamic project tags
-// Form validation
-// Error handling
-
+var userList_1 = __importDefault(__webpack_require__(/*! ./userList */ "./resources/js/components/userList.tsx"));
 
 var App = function App() {
   var _a = (0, react_1.useState)(false),
