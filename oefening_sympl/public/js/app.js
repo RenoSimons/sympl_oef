@@ -2578,21 +2578,40 @@ var inputForm = function inputForm(props) {
 
   var _b = (0, react_1.useState)(""),
       dropdownInput = _b[0],
-      setDropdownInput = _b[1]; //let [formSubmitted, setformSubmitted] = useState(false);
+      setDropdownInput = _b[1];
 
+  var _c = (0, react_1.useState)({
+    email: String,
+    dropdown: String
+  }),
+      error = _c[0],
+      setError = _c[1];
+
+  var _d = (0, react_1.useState)(),
+      message = _d[0],
+      setMessage = _d[1];
 
   var handleSubmit = function handleSubmit(e) {
-    e.preventDefault(); // Make call to the api
+    e.preventDefault();
+    var email = userInput;
+    var dropdown = dropdownInput; // Make call to the api
 
     axios_1["default"].post('http://127.0.0.1:8000/linkProject', {
-      userInput: userInput,
-      dropdownInput: dropdownInput
+      email: email,
+      dropdown: dropdown
     }).then(function (response) {
-      props.rerenderParentCallback();
+      if (response.data.validation_error) {
+        setError(response.data.validation_error);
+      } else {
+        setMessage(response.data);
+        props.rerenderParentCallback();
+      }
+    }, function (error) {
+      setError(error);
     });
   };
 
-  return react_1["default"].createElement("form", {
+  return react_1["default"].createElement(react_1["default"].Fragment, null, react_1["default"].createElement("form", {
     action: "#",
     className: "mt-6 flex",
     onSubmit: handleSubmit
@@ -2600,7 +2619,13 @@ var inputForm = function inputForm(props) {
     onInputUpdated: setUserInput
   }), react_1["default"].createElement(dropDown_1["default"], {
     onDropInputUpdated: setDropdownInput
-  }), react_1["default"].createElement(linkButton_1["default"], null));
+  }), react_1["default"].createElement(linkButton_1["default"], null)), react_1["default"].createElement("div", null, react_1["default"].createElement("ul", null, react_1["default"].createElement("li", null, react_1["default"].createElement("span", {
+    className: "text-red-400"
+  }, error.email)), react_1["default"].createElement("li", null, react_1["default"].createElement("span", {
+    className: "text-red-400"
+  }, error.dropdown)), react_1["default"].createElement("li", null, react_1["default"].createElement("span", {
+    className: "text-green-400"
+  }, message)))));
 };
 
 exports["default"] = inputForm;
