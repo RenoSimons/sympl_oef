@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import $  from "jquery";
 
 interface Props {
     input: any;
@@ -24,6 +25,7 @@ const autoComplete: React.FC<Props> = (props) => {
     }
 
     useEffect(() => {
+        $('#autocomplete').show();
         // Get everything lowercase and filter when input prop changes
         setSuggestions(emails.filter(
             email => email.toLowerCase().indexOf(props.input.toLowerCase()) > -1
@@ -38,7 +40,7 @@ const autoComplete: React.FC<Props> = (props) => {
     }
 
     return (
-       <div>
+       <div id="autocomplete">
            <ul style={{backgroundColor: "white", position: 'absolute'}}>
                {suggestions.map((suggestion, index) => {
                    return(

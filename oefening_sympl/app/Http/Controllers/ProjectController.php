@@ -31,8 +31,15 @@ class ProjectController extends Controller
 
         } else {
             // If the validation passes
+
             // Get the given e-mail's user object
             $user = User::where('email', $request->email)->first();
+
+            if(!$user) {
+                $message = "User does not exist, enter a valid email";
+
+                return response()->json($message);
+            }
 
             // Get the given project's ID
             $project_id =  $request->dropdown;
