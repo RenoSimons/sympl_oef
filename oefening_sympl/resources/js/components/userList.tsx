@@ -33,8 +33,6 @@ const userList: React.FC<Props> = (props) => {
                     <User key={user.id} user={user}/>
                 ))}
             </ul>
-
-            <p>{props.rerenderComponent}</p>
         </div>
     );
 };

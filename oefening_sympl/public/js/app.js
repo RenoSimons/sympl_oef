@@ -2208,10 +2208,6 @@ var autoComplete = function autoComplete(props) {
       suggestions = _c[0],
       setSuggestions = _c[1];
 
-  var _d = (0, react_1.useState)(false),
-      suggestionAdded = _d[0],
-      setSuggestionAdded = _d[1];
-
   if (props.input.length > 0 && !isLoaded) {
     fetch("http://127.0.0.1:8000/getAllEmails").then(function (res) {
       return res.json();
@@ -2231,15 +2227,19 @@ var autoComplete = function autoComplete(props) {
   var fillInSuggestion = function fillInSuggestion(e) {
     var element = e.currentTarget;
     props.onSuggestionClicked(element.innerText);
-    setSuggestionAdded(true);
   };
 
-  return react_1["default"].createElement("div", null, react_1["default"].createElement("ul", null, !suggestionAdded ? suggestions.map(function (suggestion, index) {
+  return react_1["default"].createElement("div", null, react_1["default"].createElement("ul", {
+    style: {
+      backgroundColor: "white",
+      position: 'absolute'
+    }
+  }, suggestions.map(function (suggestion, index) {
     return react_1["default"].createElement("li", {
       key: index,
       onClick: fillInSuggestion
     }, suggestion);
-  }) : ''));
+  })));
 };
 
 exports["default"] = autoComplete;
@@ -2668,6 +2668,59 @@ exports["default"] = linkButton;
 
 /***/ }),
 
+/***/ "./resources/js/components/projectTile.tsx":
+/*!*************************************************!*\
+  !*** ./resources/js/components/projectTile.tsx ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var projectTile = function projectTile(props) {
+  var renderProjectTag = function renderProjectTag() {
+    switch (props.project_title) {
+      case 'Project1':
+        return react_1["default"].createElement("span", {
+          className: "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800"
+        }, props.project_title);
+
+      case 'Project2':
+        return react_1["default"].createElement("span", {
+          className: "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800"
+        }, props.project_title);
+
+      case 'Project3':
+        return react_1["default"].createElement("span", {
+          className: "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800"
+        }, props.project_title);
+
+      case 'Project4':
+        return react_1["default"].createElement("span", {
+          className: "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800"
+        }, props.project_title);
+    }
+  };
+
+  return react_1["default"].createElement(react_1["default"].Fragment, null, renderProjectTag());
+};
+
+exports["default"] = projectTile;
+
+/***/ }),
+
 /***/ "./resources/js/components/user.tsx":
 /*!******************************************!*\
   !*** ./resources/js/components/user.tsx ***!
@@ -2711,11 +2764,19 @@ var __importStar = this && this.__importStar || function (mod) {
   return result;
 };
 
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
 var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var projectTile_1 = __importDefault(__webpack_require__(/*! ./projectTile */ "./resources/js/components/projectTile.tsx"));
 
 var user = function user(props) {
   return React.createElement("li", {
@@ -2739,10 +2800,10 @@ var user = function user(props) {
   }, Object.entries(props.user.projects).map(function (_a) {
     var key = _a[0],
         value = _a[1];
-    return React.createElement("span", {
+    return React.createElement(projectTile_1["default"], {
       key: key,
-      className: "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800"
-    }, value.project_name);
+      project_title: value.project_name
+    });
   }))));
 };
 
@@ -2836,7 +2897,7 @@ var userList = function userList(props) {
       key: user.id,
       user: user
     });
-  })), react_1["default"].createElement("p", null, props.rerenderComponent));
+  })));
 };
 
 exports["default"] = userList;

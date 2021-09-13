@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createPortal } from 'react-dom';
+import ProjectTile from './projectTile';
 
 type Props = {
     user: {
@@ -21,7 +21,7 @@ const user: React.FC<Props> = (props) => {
                 </div>
                 <div className="flex-shrink-0">
                     {Object.entries(props.user.projects).map(([key, value]) => {
-                        return <span key={key} className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">{value.project_name}</span>
+                        return <ProjectTile key={key} project_title={value.project_name}/>
                     })}
                 </div>
             </div>

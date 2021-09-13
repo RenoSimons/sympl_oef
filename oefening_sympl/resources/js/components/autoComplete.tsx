@@ -11,7 +11,6 @@ const autoComplete: React.FC<Props> = (props) => {
     const [emails, setEmails] = useState<any[]>([])
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [suggestions, setSuggestions] = useState<any>([]);
-    const [suggestionAdded, setSuggestionAdded] = useState<boolean>(false);
 
     if (props.input.length > 0 && !isLoaded) {
         fetch("http://127.0.0.1:8000/getAllEmails")
@@ -36,17 +35,16 @@ const autoComplete: React.FC<Props> = (props) => {
     const fillInSuggestion = (e: React.MouseEvent<HTMLLIElement>) => {
         const element = e.currentTarget as HTMLLIElement;
         props.onSuggestionClicked(element.innerText);
-        setSuggestionAdded(true);
     }
 
-    return (   
+    return (
        <div>
-           <ul>
-               { !suggestionAdded ? suggestions.map((suggestion, index) => {
+           <ul style={{backgroundColor: "white", position: 'absolute'}}>
+               {suggestions.map((suggestion, index) => {
                    return(
                        <li key={index} onClick={fillInSuggestion}>{suggestion}</li>
                    )
-                }) : ''}
+                })}
            </ul>
        </div>
     );
