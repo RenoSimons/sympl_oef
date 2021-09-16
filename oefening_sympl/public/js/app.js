@@ -2211,6 +2211,10 @@ var autoComplete = function autoComplete(props) {
       suggestions = _c[0],
       setSuggestions = _c[1];
 
+  var _d = (0, react_1.useState)(),
+      lastSuggestionClicked = _d[0],
+      setLastSuggestionClicked = _d[1];
+
   if (props.input.length > 0 && !isLoaded) {
     fetch("http://127.0.0.1:8000/getAllEmails").then(function (res) {
       return res.json();
@@ -2221,31 +2225,34 @@ var autoComplete = function autoComplete(props) {
   }
 
   (0, react_1.useEffect)(function () {
-    (0, jquery_1["default"])('#autocomplete').show(); // Get everything lowercase and filter when input prop changes
+    // Hide or show autocomplete based on input
+    props.input.length === 0 || props.input === lastSuggestionClicked ? (0, jquery_1["default"])('#autocomplete').hide() : (0, jquery_1["default"])('#autocomplete').show(); // Get everything lowercase and filter when input prop changes
 
     setSuggestions(emails.filter(function (email) {
       return email.toLowerCase().indexOf(props.input.toLowerCase()) > -1;
     }));
-  }, [props.input]); // On click on suggestion pass the value to the parents
+  }, [props.input]); // On click on suggestion, pass the value to the parents
 
   var fillInSuggestion = function fillInSuggestion(e) {
+    // Get the list element & lift data up
     var element = e.currentTarget;
     props.onSuggestionClicked(element.innerText);
+    setLastSuggestionClicked(element.innerText);
   };
 
   return react_1["default"].createElement("div", {
     id: "autocomplete"
   }, react_1["default"].createElement("ul", {
-    style: {
-      backgroundColor: "white",
-      position: 'absolute'
-    }
+    className: "w-36 bg-white absolute"
   }, suggestions.map(function (suggestion, index) {
     return react_1["default"].createElement("li", {
+      className: "w-36 text-sm cursor-pointer p-1",
       key: index,
       onClick: fillInSuggestion
     }, suggestion);
-  })));
+  }), suggestions.length == 0 ? react_1["default"].createElement("li", {
+    className: "w-36 text-sm  p-1"
+  }, "No users found...") : null));
 };
 
 exports["default"] = autoComplete;
@@ -2488,7 +2495,9 @@ var inputField = function inputField(props) {
   };
 
   var suggestionClicked = function suggestionClicked(value) {
-    props.onInputUpdated(value);
+    // Update form props
+    props.onInputUpdated(value); // Update the input field with suggestion
+
     setInput(value);
   };
 
@@ -2502,7 +2511,7 @@ var inputField = function inputField(props) {
     type: "text",
     name: "email",
     id: "email",
-    className: "py-2 px-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+    className: "py-2 px-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-36 sm:text-sm border-gray-300 rounded-md",
     placeholder: "Enter an email"
   })), react_1["default"].createElement("div", null, react_1["default"].createElement(autoComplete_1["default"], {
     input: input,
@@ -2604,7 +2613,9 @@ var inputForm = function inputForm(props) {
       setFeedbackMessage = _e[1];
 
   var handleSubmit = function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault(); // Close autocomplete field
+
+    (0, jquery_1["default"])('#autocomplete').hide();
     var email = userInput;
     var dropdown = dropdownInput; // Make call to the api
 
@@ -2613,14 +2624,16 @@ var inputForm = function inputForm(props) {
       dropdown: dropdown
     }).then(function (response) {
       if (response.data.validation_error) {
+        // Handle validation errors
         setHasError(true);
         setError(response.data.validation_error);
+        setFeedbackMessage('');
       } else {
+        // Update feedback message
         setHasError(false);
-        setFeedbackMessage(response.data);
-        props.rerenderParentCallback(); // Wrong way to close the autocomplete (-_-)
+        setFeedbackMessage(response.data); // Rerender the user list component
 
-        (0, jquery_1["default"])('#autocomplete').hide();
+        props.rerenderParentCallback();
       }
     }, function (error) {
       setError(error);
@@ -2635,12 +2648,18 @@ var inputForm = function inputForm(props) {
     onInputUpdated: setUserInput
   }), react_1["default"].createElement(dropDown_1["default"], {
     onDropInputUpdated: setDropdownInput
-  }), react_1["default"].createElement(linkButton_1["default"], null)), hasError ? react_1["default"].createElement("div", null, react_1["default"].createElement("ul", null, react_1["default"].createElement("li", null, react_1["default"].createElement("span", {
-    className: "text-red-400"
-  }, error.email)), react_1["default"].createElement("li", null, react_1["default"].createElement("span", {
-    className: "text-red-400"
-  }, error.dropdown)))) : '', react_1["default"].createElement("div", null, react_1["default"].createElement("ul", null, react_1["default"].createElement("li", null, react_1["default"].createElement("span", {
-    className: "text-green-400"
+  }), react_1["default"].createElement(linkButton_1["default"], null)), hasError ? react_1["default"].createElement("div", null, react_1["default"].createElement("ul", {
+    className: "flex"
+  }, Object.entries(error).map(function (_a) {
+    var key = _a[0],
+        message = _a[1];
+    return react_1["default"].createElement("li", {
+      key: key
+    }, react_1["default"].createElement("span", {
+      className: "text-red-400 text-xs ml-2"
+    }, message));
+  }))) : null, react_1["default"].createElement("div", null, react_1["default"].createElement("ul", null, react_1["default"].createElement("li", null, react_1["default"].createElement("span", {
+    className: "text-green-400 text-xs ml-2"
   }, feedbackMessage)))));
 };
 

@@ -15,7 +15,9 @@ const inputField: React.FC<Props> = (props) => {
     };
 
     const suggestionClicked = (value) => {
+        // Update form props
         props.onInputUpdated(value);
+        // Update the input field with suggestion
         setInput(value);
     }
 
@@ -23,7 +25,7 @@ const inputField: React.FC<Props> = (props) => {
         <div>
             <div>
                 <label htmlFor="email" className="sr-only">Email address</label>
-                <input onChange={inputChange} value={input} autoComplete="off" type="text" name="email" id="email" className="py-2 px-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter an email" />
+                <input onChange={inputChange} value={input} autoComplete="off" type="text" name="email" id="email" className="py-2 px-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-36 sm:text-sm border-gray-300 rounded-md" placeholder="Enter an email"/>
             </div>
             <div>
                 <AutoComplete input={input} onSuggestionClicked={suggestionClicked}/>
